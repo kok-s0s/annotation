@@ -1,5 +1,6 @@
-#include "Annotation.h"
 #include <QtWidgets/QApplication>
+
+#include "Annotation.h"
 
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);

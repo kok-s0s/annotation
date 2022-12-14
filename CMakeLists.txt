@@ -12,13 +12,14 @@ if(CMAKE_VERSION VERSION_LESS "3.7.0")
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 endif()
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 add_executable(annotation
     main.cpp
     Annotation.cpp
     Annotation.ui
     Annotation.qrc
+    Arrow.cpp
 )
 
-target_link_libraries(annotation Qt5::Widgets)
+target_link_libraries(annotation Qt5::Core Qt5::Widgets)

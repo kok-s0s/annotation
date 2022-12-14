@@ -1,19 +1,23 @@
-#pragma once
+#ifndef ANNOTATION_H_
+#define ANNOTATION_H_
+
+#include <QDebug>
+#include <QtWidgets>
 
 #include "ui_Annotation.h"
-#include <QDebug>
-#include <QtWidgets/QMainWindow>
 
 class Annotation : public QMainWindow {
   Q_OBJECT
 
-private:
+ private:
   Ui::AnnotationClass ui;
 
-public:
+ public:
   Annotation(QWidget *parent = Q_NULLPTR);
   ~Annotation();
 
-private:
+ private:
   Q_SLOT void on_btnArrow_clicked();
 };
+
+#endif  // ANNOTATION_H_
