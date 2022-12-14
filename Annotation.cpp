@@ -5,3 +5,5 @@ Annotation::Annotation(QWidget *parent) : QMainWindow(parent) {
 }
 
 Annotation::~Annotation() {}
+
+void Annotation::on_btnArrow_clicked() { qDebug() << "clicked\n"; }
