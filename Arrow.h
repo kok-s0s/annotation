@@ -15,13 +15,21 @@ class Arrow : public QWidget {
   explicit Arrow(QWidget *parent = nullptr);
   ~Arrow();
   void setArrowStatusImage();
+  void setAngleIdx(const int &value);
+  int getAngleIdx();
+  void setFixedColorIdx(const int &value);
+  int getFixedColorIdx();
+  void setSolidIdx(const int &value);
+  int getSolidIdx();
+  void setSizeIdx(const int &value);
+  int getSizeIdx();
 
  private:
   Status m_status;
-  int m_fixedColorIndex = 1;
-  int m_isSolid = 1;
-  int m_angle = 0;
-  int m_sizeIndex = 0;
+  int m_angleIdx = 0;
+  int m_fixedColorIdx = 0;
+  int m_solidIdx = 1;
+  int m_sizeIdx = 0;
   QPixmap m_fixedImage;
   QPixmap m_activedImage;
 };

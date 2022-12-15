@@ -15,3 +15,11 @@ void ArrowManager::start() {
   m_curArrow->move(pointX - m_curArrow->rect().width() / 2, pointY - m_curArrow->rect().height() / 2);
   m_curArrow->show();
 }
+
+void ArrowManager::setArrowAngle(const int& value) { m_curArrow->setAngleIdx(value); }
+
+void ArrowManager::setArrowSolid(const int& value) { m_curArrow->setSolidIdx(value); }
+
+void ArrowManager::setArrowFixedColor(const int& value) { m_curArrow->setFixedColorIdx(value); }
+
+void ArrowManager::setArrowSize(const int& value) { m_curArrow->setSizeIdx(value); }

@@ -26,3 +26,35 @@ Annotation::Annotation(QWidget *parent) : QMainWindow(parent) {
 Annotation::~Annotation() {}
 
 void Annotation::on_btnArrow_clicked() { m_arrowManager->start(); }
+
+void Annotation::on_btnArrowAngle_clicked() {
+  m_angleIdx++;
+  m_arrowManager->setArrowAngle(m_angleIdx);
+  if (m_angleIdx > INT_MAX) {
+    m_angleIdx = 0;
+  }
+}
+
+void Annotation::on_btnArrowSolid_clicked() {
+  m_solidIdx++;
+  m_arrowManager->setArrowSolid(m_solidIdx);
+  if (m_solidIdx > INT_MAX) {
+    m_solidIdx = 0;
+  }
+}
+
+void Annotation::on_btnArrowColor_clicked() {
+  m_fixedColorIdx++;
+  m_arrowManager->setArrowFixedColor(m_fixedColorIdx);
+  if (m_fixedColorIdx > INT_MAX) {
+    m_fixedColorIdx = 0;
+  }
+}
+
+void Annotation::on_btnArrowSize_clicked() {
+  m_sizeIdx++;
+  m_arrowManager->setArrowSize(m_sizeIdx);
+  if (m_sizeIdx > INT_MAX) {
+    m_sizeIdx = 0;
+  }
+}
