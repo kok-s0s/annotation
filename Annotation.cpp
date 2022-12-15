@@ -18,12 +18,11 @@ QVector<QColor> GlobalParam::FixedColorA = {
 };
 QVector<int> GlobalParam::ArrowSizeA = {40, 50, 60};
 
-Annotation::Annotation(QWidget *parent) : QMainWindow(parent) { ui.setupUi(this); }
+Annotation::Annotation(QWidget *parent) : QMainWindow(parent) {
+  ui.setupUi(this);
+  m_arrowManager = new ArrowManager(this);
+}
 
 Annotation::~Annotation() {}
 
-void Annotation::on_btnArrow_clicked() {
-  Arrow *arrow = new Arrow();
-  arrow->move(500, 500);
-  arrow->show();
-}
+void Annotation::on_btnArrow_clicked() { m_arrowManager->start(); }

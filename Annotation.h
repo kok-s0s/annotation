@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QtWidgets>
 
+#include "ArrowManager.h"
 #include "ui_Annotation.h"
 
 class Annotation : public QMainWindow {
@@ -11,6 +12,7 @@ class Annotation : public QMainWindow {
 
  private:
   Ui::AnnotationClass ui;
+  ArrowManager *m_arrowManager;
 
  public:
   Annotation(QWidget *parent = Q_NULLPTR);
