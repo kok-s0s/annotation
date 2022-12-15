@@ -20,7 +20,7 @@ QVector<int> GlobalParam::ArrowSizeA = {40, 50, 60};
 
 Annotation::Annotation(QWidget *parent) : QMainWindow(parent) {
   ui.setupUi(this);
-  m_arrowManager = new ArrowManager(this);
+  m_arrowManager = new ArrowManager(ui.frameAnnotation);
 }
 
 Annotation::~Annotation() {}

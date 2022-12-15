@@ -16,6 +16,8 @@ void Arrow::paintEvent(QPaintEvent *event) {
       painter.drawPixmap(0, 0, iSize, iSize, m_activedImage);
       break;
   }
+  painter.setPen(QColor("green"));
+  painter.drawRect(0, 0, width() - 1, height() - 1);
 }
 
 Arrow::Arrow(QWidget *parent) : QWidget(parent) {

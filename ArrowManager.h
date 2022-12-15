@@ -9,13 +9,13 @@
 class ArrowManager : public QObject {
   Q_OBJECT
 
+ protected:
+  QWidget* m_parent = nullptr;
+
  public:
   ArrowManager(QWidget* parent);
   ~ArrowManager();
   void start();
-
- protected:
-  QWidget* m_parent = nullptr;
 
  private:
   Arrow* m_curArrow = nullptr;

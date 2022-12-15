@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1109</width>
-    <height>659</height>
+    <width>1100</width>
+    <height>640</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1100</width>
+    <height>640</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1100</width>
+    <height>640</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -27,8 +39,8 @@
      <rect>
       <x>20</x>
       <y>20</y>
-      <width>911</width>
-      <height>621</height>
+      <width>900</width>
+      <height>600</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -41,10 +53,10 @@
    <widget class="QPushButton" name="btnArrow">
     <property name="geometry">
      <rect>
-      <x>960</x>
+      <x>950</x>
       <y>30</y>
-      <width>121</width>
-      <height>61</height>
+      <width>120</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="text">
