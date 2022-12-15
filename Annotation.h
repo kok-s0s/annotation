@@ -5,13 +5,15 @@
 #include <QtWidgets>
 
 #include "ArrowManager.h"
+#include "Frame.h"
 #include "ui_Annotation.h"
 
 class Annotation : public QMainWindow {
   Q_OBJECT
 
  private:
-  Ui::AnnotationClass ui;
+  Ui::AnnotationClass *ui;
+  Frame *m_frame;
   ArrowManager *m_arrowManager;
   int m_angleIdx = 0;
   int m_solidIdx = 0;

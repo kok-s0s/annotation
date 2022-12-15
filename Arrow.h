@@ -7,6 +7,7 @@
 
 class Arrow : public QWidget {
   Q_OBJECT
+
  protected:
   void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 

@@ -21,6 +21,8 @@ void Arrow::paintEvent(QPaintEvent *event) {
 }
 
 Arrow::Arrow(QWidget *parent) : QWidget(parent) {
+  this->setMouseTracking(true);
+
   m_status = Status::Fixed;
 
   int iSize = GlobalParam::ArrowSizeA[m_sizeIdx];

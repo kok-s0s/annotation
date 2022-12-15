@@ -20,6 +20,7 @@ class ArrowManager : public QObject {
   void setArrowSolid(const int& value);
   void setArrowFixedColor(const int& value);
   void setArrowSize(const int& value);
+  void mouseMove(const QPoint& wdgPt);
 
  private:
   Arrow* m_curArrow = nullptr;

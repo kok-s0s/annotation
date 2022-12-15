@@ -19,6 +19,7 @@ add_executable(annotation
     Annotation.cpp
     Annotation.ui
     Annotation.qrc
+    Frame.cpp
     ArrowManager.cpp
     Arrow.cpp
 )

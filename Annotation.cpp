@@ -1,6 +1,7 @@
 #include "Annotation.h"
 
 #include "Arrow.h"
+#include "ui_Annotation.h"
 
 int GlobalParam::Global_X = 0;
 int GlobalParam::Global_Y = 0;
@@ -18,9 +19,11 @@ QVector<QColor> GlobalParam::FixedColorA = {
 };
 QVector<int> GlobalParam::ArrowSizeA = {40, 50, 60};
 
-Annotation::Annotation(QWidget *parent) : QMainWindow(parent) {
-  ui.setupUi(this);
-  m_arrowManager = new ArrowManager(ui.frameAnnotation);
+Annotation::Annotation(QWidget *parent) : QMainWindow(parent), ui(new Ui::AnnotationClass) {
+  ui->setupUi(this);
+
+  m_frame = new Frame(this);
+  m_arrowManager = new ArrowManager(m_frame);
 }
 
 Annotation::~Annotation() {}
