@@ -17,12 +17,13 @@ class ArrowManager : public QObject {
   ~ArrowManager();
   void addArrow();
   void changeWorkStatus();
+  void changeCurArrow(Arrow* arrow);
   void setArrowAngle(const int& value);
   void setArrowSolid(const int& value);
   void setArrowFixedColor(const int& value);
   void setArrowSize(const int& value);
   void mouseMove(const QPoint& wdgPt);
-  void onPressArrow(Arrow* curArrow);
+  void onPressArrow();
 
  private:
   Arrow* m_curArrow = nullptr;

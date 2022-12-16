@@ -16,13 +16,11 @@ void Arrow::paintEvent(QPaintEvent *event) {
       painter.drawPixmap(0, 0, iSize, iSize, m_activedImage);
       break;
   }
-  painter.setPen(QColor("green"));
-  painter.drawRect(0, 0, width() - 1, height() - 1);
 }
 
 void Arrow::mousePressEvent(QMouseEvent *event) {
   if (event->button() == Qt::LeftButton) {
-    emit sigPressArrow(this);
+    emit sigPressArrow();
   }
   QWidget::mousePressEvent(event);
 }
@@ -45,6 +43,54 @@ void Arrow::setArrowStatusImage() {
 }
 
 void Arrow::setStatus(const int &value) { m_status = Status(value); }
+
+QRect Arrow::getArrowArea() {
+  QRect rt = rect();
+  int half = rt.width() / 2;
+  switch (m_angleIdx) {
+    case 0:  // 45°
+      rt.setX(half - 1);
+      rt.setY(half - 1);
+      break;
+    case 1:  // 90°
+      rt.setX(half - 1);
+      rt.setY(half / 2 - 1);
+      break;
+    case 2:  // 135°
+      rt.setX(half - 1);
+      rt.setY(0);
+      break;
+    case 3:  // 180°
+      rt.setX(half / 2 - 1);
+      rt.setY(0);
+      break;
+    case 4:  // 225°
+      rt.setX(0);
+      rt.setY(0);
+      break;
+    case 5:  // 270°
+      rt.setX(0);
+      rt.setY(half / 2 - 1);
+      break;
+    case 6:  // 315°
+      rt.setX(0);
+      rt.setY(half - 1);
+      break;
+    case 7:  // 0°
+      rt.setX(half / 2 - 1);
+      rt.setY(half - 1);
+      break;
+  }
+  rt.setWidth(half);
+  rt.setHeight(half);
+  return rt;
+}
+
+bool Arrow::arrowAreaFlag(int posX, int posY) { return getArrowArea().contains(mapFromParent(QPoint(posX, posY))); }
+
+void Arrow::setFirstCreationFlag(const bool &flag) { m_firstCreationFlag = flag; }
+
+bool Arrow::getFirstCreationFlag() { return m_firstCreationFlag; }
 
 void Arrow::setAngleIdx(const int &value) {
   m_angleIdx = value % 8;

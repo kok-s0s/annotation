@@ -13,7 +13,7 @@ class Arrow : public QWidget {
   void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
  public:
-  Q_SIGNAL void sigPressArrow(Arrow *curArrow);
+  Q_SIGNAL void sigPressArrow();
 
  public:
   enum class Status { Actived, Fixed };
@@ -21,6 +21,10 @@ class Arrow : public QWidget {
   ~Arrow();
   void setArrowStatusImage();
   void setStatus(const int &value);
+  QRect getArrowArea();
+  bool arrowAreaFlag(int posX, int posY);
+  void setFirstCreationFlag(const bool &flag);
+  bool getFirstCreationFlag();
   void setAngleIdx(const int &value);
   int getAngleIdx();
   void setFixedColorIdx(const int &value);
@@ -32,6 +36,7 @@ class Arrow : public QWidget {
 
  private:
   Status m_status;
+  bool m_firstCreationFlag = true;
   int m_angleIdx = 0;
   int m_fixedColorIdx = 0;
   int m_solidIdx = 1;
