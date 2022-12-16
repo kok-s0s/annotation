@@ -3,7 +3,7 @@
 
 #include <QtWidgets>
 
-#include "AnnotationDefine.h"
+#include "../AnnotationDefine.h"
 
 class Arrow : public QWidget {
   Q_OBJECT

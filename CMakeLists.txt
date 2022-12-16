@@ -20,8 +20,8 @@ add_executable(annotation
     Annotation.ui
     Annotation.qrc
     Frame.cpp
-    ArrowManager.cpp
-    Arrow.cpp
+    Manager/ArrowManager.cpp
+    Unit/Arrow.cpp
 )
 
 target_link_libraries(annotation Qt5::Core Qt5::Widgets)
