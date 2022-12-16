@@ -32,5 +32,7 @@ void ArrowManager::mouseMove(const QPoint& wdgPt) {
 
   QApplication::setOverrideCursor(Qt::BlankCursor);
 
-  m_curArrow->move(wdgPt.x() - m_curArrow->rect().width() / 2, wdgPt.y() - m_curArrow->rect().height() / 2);
+  if (m_curArrow != nullptr) {
+    m_curArrow->move(wdgPt.x() - m_curArrow->rect().width() / 2, wdgPt.y() - m_curArrow->rect().height() / 2);
+  }
 }

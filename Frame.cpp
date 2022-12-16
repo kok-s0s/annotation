@@ -2,10 +2,8 @@
 
 void Frame::mouseMoveEvent(QMouseEvent* event) {
   QPoint wdgPt = mapFromGlobal(event->globalPos());
-  // m_arrowManager->mouseMove(wdgPt);
+  m_arrowManager->mouseMove(wdgPt);
   QWidget::mouseMoveEvent(event);
-
-  qDebug() << "pos = " << event->globalPos() << endl;
 }
 
 Frame::Frame(QWidget* parent) : QFrame(parent) {
@@ -14,6 +12,8 @@ Frame::Frame(QWidget* parent) : QFrame(parent) {
   this->setFrameShape(QFrame::StyledPanel);
   this->setFrameShadow(QFrame::Raised);
   this->setMouseTracking(true);
+
+  m_arrowManager = new ArrowManager(this);
 }
 
 Frame::~Frame() {}

@@ -12,6 +12,9 @@ class Frame : public QFrame {
  public:
   Frame(QWidget *parent = Q_NULLPTR);
   ~Frame();
+
+ public:
+  ArrowManager *m_arrowManager;
 };
 
 #endif  // FRAME_H_
