@@ -21,10 +21,12 @@ void ArrowManager::changeWorkStatus() {
   if (!m_workStatus) {
     addArrow();
 
-    QApplication::setOverrideCursor(Qt::BlankCursor);
-
     m_workStatus = true;
   } else {
+    delete m_curArrow;
+    m_curArrow = nullptr;
+    QApplication::setOverrideCursor(Qt::ArrowCursor);
+    m_workStatus = false;
   }
 }
 
@@ -40,9 +42,8 @@ void ArrowManager::mouseMove(const QPoint& wdgPt) {
   GlobalParam::Global_X = wdgPt.x();
   GlobalParam::Global_Y = wdgPt.y();
 
-  QApplication::setOverrideCursor(Qt::BlankCursor);
-
   if (m_curArrow != nullptr) {
+    QApplication::setOverrideCursor(Qt::BlankCursor);
     m_curArrow->move(wdgPt.x() - m_curArrow->rect().width() / 2, wdgPt.y() - m_curArrow->rect().height() / 2);
   }
 }
