@@ -30,13 +30,29 @@ void ArrowManager::changeWorkStatus() {
   }
 }
 
-void ArrowManager::setArrowAngle(const int& value) { m_curArrow->setAngleIdx(value); }
+void ArrowManager::setArrowAngle(const int& value) {
+  if (m_curArrow != nullptr) {
+    m_curArrow->setAngleIdx(value);
+  }
+}
 
-void ArrowManager::setArrowSolid(const int& value) { m_curArrow->setSolidIdx(value); }
+void ArrowManager::setArrowSolid(const int& value) {
+  if (m_curArrow != nullptr) {
+    m_curArrow->setSolidIdx(value);
+  }
+}
 
-void ArrowManager::setArrowFixedColor(const int& value) { m_curArrow->setFixedColorIdx(value); }
+void ArrowManager::setArrowFixedColor(const int& value) {
+  if (m_curArrow != nullptr) {
+    m_curArrow->setFixedColorIdx(value);
+  }
+}
 
-void ArrowManager::setArrowSize(const int& value) { m_curArrow->setSizeIdx(value); }
+void ArrowManager::setArrowSize(const int& value) {
+  if (m_curArrow != nullptr) {
+    m_curArrow->setSizeIdx(value);
+  }
+}
 
 void ArrowManager::mouseMove(const QPoint& wdgPt) {
   GlobalParam::Global_X = wdgPt.x();
