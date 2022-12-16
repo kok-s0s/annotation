@@ -20,6 +20,7 @@ class Arrow : public QWidget {
   explicit Arrow(QWidget *parent = nullptr);
   ~Arrow();
   void setArrowStatusImage();
+  void setStatus(const int &value);
   void setAngleIdx(const int &value);
   int getAngleIdx();
   void setFixedColorIdx(const int &value);

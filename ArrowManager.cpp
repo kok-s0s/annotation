@@ -49,6 +49,7 @@ void ArrowManager::mouseMove(const QPoint& wdgPt) {
 
 void ArrowManager::onPressArrow(Arrow* curArrow) {
   if (m_curArrow == curArrow) {
+    m_curArrow->setStatus(1);
     addArrow();
   }
 }

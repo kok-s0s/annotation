@@ -30,7 +30,7 @@ void Arrow::mousePressEvent(QMouseEvent *event) {
 Arrow::Arrow(QWidget *parent) : QWidget(parent) {
   this->setMouseTracking(true);
 
-  m_status = Status::Fixed;
+  m_status = Status::Actived;
 
   int iSize = GlobalParam::ArrowSizeA[m_sizeIdx];
   setFixedSize(iSize, iSize);
@@ -43,6 +43,8 @@ void Arrow::setArrowStatusImage() {
   m_fixedImage.load(QString("%1/A%2/%3_%4.png").arg(ARROW_RES_PATH).arg(m_fixedColorIdx).arg(m_solidIdx).arg(m_angleIdx));
   m_activedImage.load(QString("%1/A/%2_%3.png").arg(ARROW_RES_PATH).arg(m_solidIdx).arg(m_angleIdx));
 }
+
+void Arrow::setStatus(const int &value) { m_status = Status(value); }
 
 void Arrow::setAngleIdx(const int &value) {
   m_angleIdx = value % 8;
