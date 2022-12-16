@@ -15,7 +15,7 @@ class ArrowManager : public QObject {
  public:
   ArrowManager(QWidget* parent);
   ~ArrowManager();
-  void start();
+  void changeWorkStatus();
   void setArrowAngle(const int& value);
   void setArrowSolid(const int& value);
   void setArrowFixedColor(const int& value);
@@ -25,6 +25,7 @@ class ArrowManager : public QObject {
  private:
   Arrow* m_curArrow = nullptr;
   QList<Arrow*> m_ctrlArrowList;
+  bool m_workStatus = false;
 };
 
 #endif  // ARROWMANAGER_H_

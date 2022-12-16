@@ -26,7 +26,7 @@ Annotation::Annotation(QWidget *parent) : QMainWindow(parent), ui(new Ui::Annota
 
 Annotation::~Annotation() {}
 
-void Annotation::on_btnArrow_clicked() { m_frame->m_arrowManager->start(); }
+void Annotation::on_btnArrow_clicked() { m_frame->m_arrowManager->changeWorkStatus(); }
 
 void Annotation::on_btnArrowAngle_clicked() {
   m_angleIdx++;

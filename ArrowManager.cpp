@@ -4,18 +4,23 @@ ArrowManager::ArrowManager(QWidget* parent) : QObject(parent) { m_parent = paren
 
 ArrowManager::~ArrowManager() {}
 
-void ArrowManager::start() {
-  int pointX = m_parent->width() / 2;
-  int pointY = m_parent->height() / 2;
+void ArrowManager::changeWorkStatus() {
+  if (!m_workStatus) {
+    int pointX = m_parent->width() / 2;
+    int pointY = m_parent->height() / 2;
 
-  GlobalParam::Global_X = pointX;
-  GlobalParam::Global_Y = pointY;
+    GlobalParam::Global_X = pointX;
+    GlobalParam::Global_Y = pointY;
 
-  m_curArrow = new Arrow(m_parent);
-  m_curArrow->move(pointX - m_curArrow->rect().width() / 2, pointY - m_curArrow->rect().height() / 2);
-  m_curArrow->show();
+    m_curArrow = new Arrow(m_parent);
+    m_curArrow->move(pointX - m_curArrow->rect().width() / 2, pointY - m_curArrow->rect().height() / 2);
+    m_curArrow->show();
 
-  QApplication::setOverrideCursor(Qt::BlankCursor);
+    QApplication::setOverrideCursor(Qt::BlankCursor);
+
+    m_workStatus = true;
+  } else {
+  }
 }
 
 void ArrowManager::setArrowAngle(const int& value) { m_curArrow->setAngleIdx(value); }
