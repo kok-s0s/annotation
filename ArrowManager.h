@@ -26,7 +26,8 @@ class ArrowManager : public QObject {
 
  private:
   Arrow* m_curArrow = nullptr;
-  QList<Arrow*> m_ctrlArrowList;
+  QList<Arrow*> m_curArrowList;
+  int m_arrowMaxCount = 5;
   bool m_workStatus = false;
 };
 

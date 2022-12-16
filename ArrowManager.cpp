@@ -50,7 +50,10 @@ void ArrowManager::mouseMove(const QPoint& wdgPt) {
 
 void ArrowManager::onPressArrow(Arrow* curArrow) {
   if (m_curArrow == curArrow) {
-    m_curArrow->setStatus(1);
-    addArrow();
+    if (m_curArrowList.size() < m_arrowMaxCount) {
+      m_curArrow->setStatus(1);
+      m_curArrowList.append(m_curArrow);
+      addArrow();
+    }
   }
 }
