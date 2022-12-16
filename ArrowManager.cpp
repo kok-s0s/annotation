@@ -4,17 +4,22 @@ ArrowManager::ArrowManager(QWidget* parent) : QObject(parent) { m_parent = paren
 
 ArrowManager::~ArrowManager() {}
 
+void ArrowManager::addArrow() {
+  int pointX = m_parent->width() / 2;
+  int pointY = m_parent->height() / 2;
+
+  GlobalParam::Global_X = pointX;
+  GlobalParam::Global_Y = pointY;
+
+  m_curArrow = new Arrow(m_parent);
+  connect(m_curArrow, &Arrow::sigPressArrow, this, &ArrowManager::onPressArrow);
+  m_curArrow->move(pointX - m_curArrow->rect().width() / 2, pointY - m_curArrow->rect().height() / 2);
+  m_curArrow->show();
+}
+
 void ArrowManager::changeWorkStatus() {
   if (!m_workStatus) {
-    int pointX = m_parent->width() / 2;
-    int pointY = m_parent->height() / 2;
-
-    GlobalParam::Global_X = pointX;
-    GlobalParam::Global_Y = pointY;
-
-    m_curArrow = new Arrow(m_parent);
-    m_curArrow->move(pointX - m_curArrow->rect().width() / 2, pointY - m_curArrow->rect().height() / 2);
-    m_curArrow->show();
+    addArrow();
 
     QApplication::setOverrideCursor(Qt::BlankCursor);
 
@@ -39,5 +44,11 @@ void ArrowManager::mouseMove(const QPoint& wdgPt) {
 
   if (m_curArrow != nullptr) {
     m_curArrow->move(wdgPt.x() - m_curArrow->rect().width() / 2, wdgPt.y() - m_curArrow->rect().height() / 2);
+  }
+}
+
+void ArrowManager::onPressArrow(Arrow* curArrow) {
+  if (m_curArrow == curArrow) {
+    addArrow();
   }
 }

@@ -20,6 +20,13 @@ void Arrow::paintEvent(QPaintEvent *event) {
   painter.drawRect(0, 0, width() - 1, height() - 1);
 }
 
+void Arrow::mousePressEvent(QMouseEvent *event) {
+  if (event->button() == Qt::LeftButton) {
+    emit sigPressArrow(this);
+  }
+  QWidget::mousePressEvent(event);
+}
+
 Arrow::Arrow(QWidget *parent) : QWidget(parent) {
   this->setMouseTracking(true);
 
