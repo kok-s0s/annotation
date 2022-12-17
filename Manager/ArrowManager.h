@@ -17,6 +17,7 @@ class ArrowManager : public QObject {
   ~ArrowManager();
   void addArrow(const int& x, const int& y);
   void deleteArrow();
+  void undoArrow();
   void changeWorkStatus();
   void changeCurArrow(Arrow* arrow);
   void setArrowAngle(const int& value);

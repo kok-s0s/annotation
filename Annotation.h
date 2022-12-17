@@ -29,6 +29,7 @@ class Annotation : public QMainWindow {
   Q_SLOT void on_btnArrowColor_clicked();
   Q_SLOT void on_btnArrowSize_clicked();
   Q_SLOT void on_btnArrowDelete_clicked();
+  Q_SLOT void on_btnArrowUndo_clicked();
 };
 
 #endif  // ANNOTATION_H_

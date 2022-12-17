@@ -33,15 +33,25 @@ void ArrowManager::deleteArrow() {
   if (m_curArrowList.size() > 0) {
     if (m_curArrow->getFirstCreationFlag()) {
       Arrow* tempArrow = m_curArrowList.last();
+      tempArrow->hide();
       m_curArrowList.pop_back();
       m_undoArrowList.append(tempArrow);
-      tempArrow->hide();
     } else {
       m_curArrow->hide();
+      m_curArrow->setStatus(1);
       m_curArrowList.removeOne(m_curArrow);
       m_undoArrowList.append(m_curArrow);
       addArrow(m_curArrow->x() + m_curArrow->width() + 6, m_curArrow->y() + m_curArrow->height() + 6);
     }
+  }
+}
+
+void ArrowManager::undoArrow() {
+  if (m_undoArrowList.size() > 0) {
+    Arrow* tempArrow = m_undoArrowList.last();
+    tempArrow->show();
+    m_undoArrowList.pop_back();
+    m_curArrowList.append(tempArrow);
   }
 }
 
@@ -51,8 +61,15 @@ void ArrowManager::changeWorkStatus() {
     m_parent->setCursor(QCursor(Qt::BlankCursor));
     m_workStatus = true;
   } else {
-    delete m_curArrow;
-    m_curArrow = nullptr;
+    if (m_curArrow->getFirstCreationFlag()) {
+      delete m_curArrow;
+      m_curArrow = nullptr;
+    } else {
+      m_curArrowList.removeOne(m_curArrow);
+      delete m_curArrow;
+      m_curArrow = nullptr;
+    }
+
     m_parent->setCursor(QCursor(Qt::ArrowCursor));
     m_workStatus = false;
   }

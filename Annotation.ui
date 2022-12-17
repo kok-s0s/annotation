@@ -51,9 +51,9 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>110</y>
+      <y>100</y>
       <width>121</width>
-      <height>165</height>
+      <height>201</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -171,6 +171,32 @@
        </property>
        <property name="text">
         <string>delete</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnArrowUndo">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>undo</string>
        </property>
       </widget>
      </item>
