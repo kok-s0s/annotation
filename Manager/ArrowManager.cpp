@@ -29,6 +29,22 @@ void ArrowManager::addArrow(const int& x, const int& y) {
   m_curArrow->show();
 }
 
+void ArrowManager::deleteArrow() {
+  if (m_curArrowList.size() > 0) {
+    if (m_curArrow->getFirstCreationFlag()) {
+      Arrow* tempArrow = m_curArrowList.last();
+      m_curArrowList.pop_back();
+      m_undoArrowList.append(tempArrow);
+      tempArrow->hide();
+    } else {
+      m_curArrow->hide();
+      m_curArrowList.removeOne(m_curArrow);
+      m_undoArrowList.append(m_curArrow);
+      addArrow(m_curArrow->x() + m_curArrow->width() + 6, m_curArrow->y() + m_curArrow->height() + 6);
+    }
+  }
+}
+
 void ArrowManager::changeWorkStatus() {
   if (!m_workStatus) {
     addArrow(-1, -1);

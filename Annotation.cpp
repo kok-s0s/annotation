@@ -59,3 +59,5 @@ void Annotation::on_btnArrowSize_clicked() {
     m_sizeIdx = 0;
   }
 }
+
+void Annotation::on_btnArrowDelete_clicked() { m_frame->m_arrowManager->deleteArrow(); }

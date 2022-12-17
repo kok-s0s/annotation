@@ -16,6 +16,7 @@ class ArrowManager : public QObject {
   ArrowManager(QWidget* parent);
   ~ArrowManager();
   void addArrow(const int& x, const int& y);
+  void deleteArrow();
   void changeWorkStatus();
   void changeCurArrow(Arrow* arrow);
   void setArrowAngle(const int& value);
@@ -28,6 +29,7 @@ class ArrowManager : public QObject {
  private:
   Arrow* m_curArrow = nullptr;
   QList<Arrow*> m_curArrowList;
+  QList<Arrow*> m_undoArrowList;
   int m_arrowMaxCount = 30;
   bool m_workStatus = false;
   int m_angleIdxF = 0;
