@@ -4,14 +4,26 @@ ArrowManager::ArrowManager(QWidget* parent) : QObject(parent) { m_parent = paren
 
 ArrowManager::~ArrowManager() {}
 
-void ArrowManager::addArrow() {
-  int pointX = m_parent->width() / 2;
-  int pointY = m_parent->height() / 2;
+void ArrowManager::addArrow(const int& x, const int& y) {
+  int pointX = 0;
+  int pointY = 0;
+
+  if (x < 0 || x > m_parent->width())
+    pointX = m_parent->width() / 2;
+  else
+    pointX = x;
+
+  if (y < 0 || y > m_parent->height())
+    pointY = m_parent->height() / 2;
+  else
+    pointY = y;
+
+  // TODO setCursorPos()
 
   GlobalParam::Global_X = pointX;
   GlobalParam::Global_Y = pointY;
 
-  m_curArrow = new Arrow(m_parent);
+  m_curArrow = new Arrow(m_angleIdxF, m_fixedColorIdxF, m_solidIdxF, m_sizeIdxF, m_parent);
   connect(m_curArrow, &Arrow::sigPressArrow, this, &ArrowManager::onPressArrow);
   m_curArrow->move(pointX - m_curArrow->rect().width() / 2, pointY - m_curArrow->rect().height() / 2);
   m_curArrow->show();
@@ -19,13 +31,13 @@ void ArrowManager::addArrow() {
 
 void ArrowManager::changeWorkStatus() {
   if (!m_workStatus) {
-    addArrow();
-
+    addArrow(-1, -1);
+    m_parent->setCursor(QCursor(Qt::BlankCursor));
     m_workStatus = true;
   } else {
     delete m_curArrow;
     m_curArrow = nullptr;
-    QApplication::setOverrideCursor(Qt::ArrowCursor);
+    m_parent->setCursor(QCursor(Qt::ArrowCursor));
     m_workStatus = false;
   }
 }
@@ -44,25 +56,29 @@ void ArrowManager::changeCurArrow(Arrow* arrow) {
 
 void ArrowManager::setArrowAngle(const int& value) {
   if (m_curArrow != nullptr) {
-    m_curArrow->setAngleIdx(value);
-  }
-}
-
-void ArrowManager::setArrowSolid(const int& value) {
-  if (m_curArrow != nullptr) {
-    m_curArrow->setSolidIdx(value);
+    m_angleIdxF = value % 8;
+    m_curArrow->setAngleIdx(m_angleIdxF);
   }
 }
 
 void ArrowManager::setArrowFixedColor(const int& value) {
   if (m_curArrow != nullptr) {
-    m_curArrow->setFixedColorIdx(value);
+    m_fixedColorIdxF = value % 6;
+    m_curArrow->setFixedColorIdx(m_fixedColorIdxF);
+  }
+}
+
+void ArrowManager::setArrowSolid(const int& value) {
+  if (m_curArrow != nullptr) {
+    m_solidIdxF = value % 2;
+    m_curArrow->setSolidIdx(m_solidIdxF);
   }
 }
 
 void ArrowManager::setArrowSize(const int& value) {
   if (m_curArrow != nullptr) {
-    m_curArrow->setSizeIdx(value);
+    m_sizeIdxF = value;
+    m_curArrow->setSizeIdx(m_sizeIdxF);
   }
 }
 
@@ -84,13 +100,13 @@ void ArrowManager::mouseMove(const QPoint& wdgPt) {
 
         if (tempFlag) {
           m_curArrow->hide();
-          QApplication::setOverrideCursor(Qt::SizeAllCursor);
+          m_parent->setCursor(QCursor(Qt::ClosedHandCursor));
         } else {
           m_curArrow->show();
-          QApplication::setOverrideCursor(Qt::BlankCursor);
+          m_parent->setCursor(QCursor(Qt::BlankCursor));
         }
       } else {
-        QApplication::setOverrideCursor(Qt::BlankCursor);
+        m_parent->setCursor(QCursor(Qt::ClosedHandCursor));
       }
 
       m_curArrow->move(wdgPt.x() - m_curArrow->rect().width() / 2, wdgPt.y() - m_curArrow->rect().height() / 2);
@@ -102,8 +118,7 @@ void ArrowManager::onPressArrow() {
   if (m_workStatus) {
     if (m_curArrow->getFirstCreationFlag() == false) {
       m_curArrow->setStatus(1);
-      addArrow();
-
+      addArrow(m_curArrow->x() + m_curArrow->width() + 6, m_curArrow->y() + m_curArrow->height() + 6);
     } else {
       QPoint pt = m_parent->mapFromGlobal(QCursor::pos());
       bool tempFlag = false;
@@ -118,13 +133,14 @@ void ArrowManager::onPressArrow() {
 
       if (tempFlag) {
         changeCurArrow(arrow);
-        QApplication::setOverrideCursor(Qt::BlankCursor);
+        m_parent->setCursor(QCursor(Qt::ClosedHandCursor));
       } else {
         if (m_curArrowList.size() < m_arrowMaxCount && m_curArrow->getFirstCreationFlag()) {
           m_curArrow->setFirstCreationFlag(false);
           m_curArrow->setStatus(1);
           m_curArrowList.append(m_curArrow);
-          addArrow();
+          addArrow(m_curArrow->x() + m_curArrow->width() + 6, m_curArrow->y() + m_curArrow->height() + 6);
+          m_parent->setCursor(QCursor(Qt::BlankCursor));
         }
       }
     }

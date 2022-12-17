@@ -17,7 +17,8 @@ class Arrow : public QWidget {
 
  public:
   enum class Status { Actived, Fixed };
-  explicit Arrow(QWidget *parent = nullptr);
+  Arrow(int angleIdx, int fixedColorIdx, int solidIdx, int sizeIdx, QWidget *parent = nullptr);
+  Arrow(QWidget *parent = nullptr);
   ~Arrow();
   void setArrowStatusImage();
   void setStatus(const int &value);

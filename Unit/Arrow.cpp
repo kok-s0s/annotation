@@ -25,13 +25,26 @@ void Arrow::mousePressEvent(QMouseEvent *event) {
   QWidget::mousePressEvent(event);
 }
 
-Arrow::Arrow(QWidget *parent) : QWidget(parent) {
-  this->setMouseTracking(true);
+Arrow::Arrow(int angleIdx, int fixedColorIdx, int solidIdx, int sizeIdx, QWidget *parent) : QWidget(parent) {
+  m_status = Status::Actived;
 
+  m_angleIdx = angleIdx;
+  m_fixedColorIdx = fixedColorIdx;
+  m_solidIdx = solidIdx;
+  m_sizeIdx = sizeIdx;
+
+  int iSize = GlobalParam::ArrowSizeA[m_sizeIdx];
+  setFixedSize(iSize, iSize);
+  setMouseTracking(true);
+  setArrowStatusImage();
+}
+
+Arrow::Arrow(QWidget *parent) : QWidget(parent) {
   m_status = Status::Actived;
 
   int iSize = GlobalParam::ArrowSizeA[m_sizeIdx];
   setFixedSize(iSize, iSize);
+  setMouseTracking(true);
   setArrowStatusImage();
 }
 

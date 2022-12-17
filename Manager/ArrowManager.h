@@ -15,12 +15,12 @@ class ArrowManager : public QObject {
  public:
   ArrowManager(QWidget* parent);
   ~ArrowManager();
-  void addArrow();
+  void addArrow(const int& x, const int& y);
   void changeWorkStatus();
   void changeCurArrow(Arrow* arrow);
   void setArrowAngle(const int& value);
-  void setArrowSolid(const int& value);
   void setArrowFixedColor(const int& value);
+  void setArrowSolid(const int& value);
   void setArrowSize(const int& value);
   void mouseMove(const QPoint& wdgPt);
   void onPressArrow();
@@ -28,8 +28,12 @@ class ArrowManager : public QObject {
  private:
   Arrow* m_curArrow = nullptr;
   QList<Arrow*> m_curArrowList;
-  int m_arrowMaxCount = 5;
+  int m_arrowMaxCount = 30;
   bool m_workStatus = false;
+  int m_angleIdxF = 0;
+  int m_fixedColorIdxF = 0;
+  int m_solidIdxF = 1;
+  int m_sizeIdxF = 0;
 };
 
 #endif  // ARROWMANAGER_H_
