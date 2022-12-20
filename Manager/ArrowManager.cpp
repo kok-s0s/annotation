@@ -30,28 +30,32 @@ void ArrowManager::addArrow(const int& x, const int& y) {
 }
 
 void ArrowManager::deleteArrow() {
-  if (m_curArrowList.size() > 0) {
-    if (m_curArrow->getFirstCreationFlag()) {
-      Arrow* tempArrow = m_curArrowList.last();
-      tempArrow->hide();
-      m_curArrowList.pop_back();
-      m_undoArrowList.append(tempArrow);
-    } else {
-      m_curArrow->hide();
-      m_curArrow->setStatus(1);
-      m_curArrowList.removeOne(m_curArrow);
-      m_undoArrowList.append(m_curArrow);
-      addArrow(m_curArrow->x() + m_curArrow->width() + 6, m_curArrow->y() + m_curArrow->height() + 6);
+  if (m_workStatus) {
+    if (m_curArrowList.size() > 0) {
+      if (m_curArrow->getFirstCreationFlag()) {
+        Arrow* tempArrow = m_curArrowList.last();
+        tempArrow->hide();
+        m_curArrowList.pop_back();
+        m_undoArrowList.append(tempArrow);
+      } else {
+        m_curArrow->hide();
+        m_curArrow->setStatus(1);
+        m_curArrowList.removeOne(m_curArrow);
+        m_undoArrowList.append(m_curArrow);
+        addArrow(m_curArrow->x() + m_curArrow->width() + 6, m_curArrow->y() + m_curArrow->height() + 6);
+      }
     }
   }
 }
 
 void ArrowManager::undoArrow() {
-  if (m_undoArrowList.size() > 0) {
-    Arrow* tempArrow = m_undoArrowList.last();
-    tempArrow->show();
-    m_undoArrowList.pop_back();
-    m_curArrowList.append(tempArrow);
+  if (m_workStatus) {
+    if (m_undoArrowList.size() > 0) {
+      Arrow* tempArrow = m_undoArrowList.last();
+      tempArrow->show();
+      m_undoArrowList.pop_back();
+      m_curArrowList.append(tempArrow);
+    }
   }
 }
 
@@ -76,40 +80,42 @@ void ArrowManager::changeWorkStatus() {
 }
 
 void ArrowManager::changeCurArrow(Arrow* arrow) {
-  if (m_curArrow == arrow) {
-    return;
-  }
+  if (!m_workStatus) {
+    if (m_curArrow == arrow) {
+      return;
+    }
 
-  delete m_curArrow;
-  m_curArrow = arrow;
-  if (m_curArrow != nullptr) {
-    m_curArrow->setStatus(0);
+    delete m_curArrow;
+    m_curArrow = arrow;
+    if (m_workStatus) {
+      m_curArrow->setStatus(0);
+    }
   }
 }
 
 void ArrowManager::setArrowAngle(const int& value) {
-  if (m_curArrow != nullptr) {
+  if (m_workStatus) {
     m_angleIdxF = value % 8;
     m_curArrow->setAngleIdx(m_angleIdxF);
   }
 }
 
 void ArrowManager::setArrowFixedColor(const int& value) {
-  if (m_curArrow != nullptr) {
+  if (m_workStatus) {
     m_fixedColorIdxF = value % 6;
     m_curArrow->setFixedColorIdx(m_fixedColorIdxF);
   }
 }
 
 void ArrowManager::setArrowSolid(const int& value) {
-  if (m_curArrow != nullptr) {
+  if (m_workStatus) {
     m_solidIdxF = value % 2;
     m_curArrow->setSolidIdx(m_solidIdxF);
   }
 }
 
 void ArrowManager::setArrowSize(const int& value) {
-  if (m_curArrow != nullptr) {
+  if (m_workStatus) {
     m_sizeIdxF = value;
     m_curArrow->setSizeIdx(m_sizeIdxF);
   }
@@ -120,7 +126,7 @@ void ArrowManager::mouseMove(const QPoint& wdgPt) {
     GlobalParam::Global_X = wdgPt.x();
     GlobalParam::Global_Y = wdgPt.y();
 
-    if (m_curArrow != nullptr) {
+    if (m_workStatus) {
       if (m_curArrow->getFirstCreationFlag()) {
         bool tempFlag = false;
 
@@ -167,14 +173,12 @@ void ArrowManager::onPressArrow() {
       if (tempFlag) {
         changeCurArrow(arrow);
         m_parent->setCursor(QCursor(Qt::ClosedHandCursor));
-      } else {
-        if (m_curArrowList.size() < m_arrowMaxCount && m_curArrow->getFirstCreationFlag()) {
-          m_curArrow->setFirstCreationFlag(false);
-          m_curArrow->setStatus(1);
-          m_curArrowList.append(m_curArrow);
-          addArrow(m_curArrow->x() + m_curArrow->width() + 6, m_curArrow->y() + m_curArrow->height() + 6);
-          m_parent->setCursor(QCursor(Qt::BlankCursor));
-        }
+      } else if (m_curArrowList.size() < m_arrowMaxCount && m_curArrow->getFirstCreationFlag()) {
+        m_curArrow->setFirstCreationFlag(false);
+        m_curArrow->setStatus(1);
+        m_curArrowList.append(m_curArrow);
+        addArrow(m_curArrow->x() + m_curArrow->width() + 6, m_curArrow->y() + m_curArrow->height() + 6);
+        m_parent->setCursor(QCursor(Qt::BlankCursor));
       }
     }
   }
