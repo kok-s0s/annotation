@@ -2,9 +2,6 @@
 
 void Arrow::paintEvent(QPaintEvent *event) {
   QPainter painter(this);
-  QStyleOption opt;
-  opt.init(this);
-  style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
 
   int iSize = GlobalParam::ArrowSizeA[m_sizeIdx];
 
