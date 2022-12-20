@@ -20,3 +20,15 @@
 
 2 directories, 13 files
 ```
+
+## Problem
+
+- **01**
+
+System: Ubuntu 22.04
+
+`qt.qpa.wayland: setting cursor position is not possible on wayland`
+
+QCursor::setPos()
+
+https://linuxconfig.org/how-to-enable-disable-wayland-on-ubuntu-22-04-desktop

@@ -18,7 +18,7 @@ void ArrowManager::addArrow(const int& x, const int& y) {
   else
     pointY = y;
 
-  // TODO setCursorPos()
+  QCursor::setPos(m_parent->screen(), m_parent->mapToGlobal(QPoint(pointX, pointY)));
 
   GlobalParam::Global_X = pointX;
   GlobalParam::Global_Y = pointY;
