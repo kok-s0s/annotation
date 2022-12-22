@@ -5,6 +5,7 @@
 #include <QtCore>
 
 #define ARROW_RES_PATH QCoreApplication::applicationDirPath() + "/resource/Arrow"
+#define BORDER_PIX 6
 
 class GlobalParam {
  public:

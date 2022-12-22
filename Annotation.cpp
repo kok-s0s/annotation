@@ -63,3 +63,5 @@ void Annotation::on_btnArrowSize_clicked() {
 void Annotation::on_btnArrowDelete_clicked() { m_frame->m_arrowManager->deleteArrow(); }
 
 void Annotation::on_btnArrowUndo_clicked() { m_frame->m_arrowManager->undoArrow(); }
+
+void Annotation::on_btnText_clicked() { m_frame->m_textManager->changeWorkStatus(); }

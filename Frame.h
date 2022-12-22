@@ -4,6 +4,7 @@
 #include <QtWidgets>
 
 #include "Manager/ArrowManager.h"
+#include "Manager/TextManager.h"
 
 class Frame : public QFrame {
  protected:
@@ -15,6 +16,7 @@ class Frame : public QFrame {
 
  public:
   ArrowManager *m_arrowManager;
+  TextManager *m_textManager;
 };
 
 #endif  // FRAME_H_

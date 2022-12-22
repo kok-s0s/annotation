@@ -30,6 +30,7 @@ class Annotation : public QMainWindow {
   Q_SLOT void on_btnArrowSize_clicked();
   Q_SLOT void on_btnArrowDelete_clicked();
   Q_SLOT void on_btnArrowUndo_clicked();
+  Q_SLOT void on_btnText_clicked();
 };
 
 #endif  // ANNOTATION_H_

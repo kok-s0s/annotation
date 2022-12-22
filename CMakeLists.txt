@@ -14,7 +14,9 @@ add_executable(annotation
     Annotation.qrc
     Frame.cpp
     Manager/ArrowManager.cpp
+    Manager/TextManager.cpp
     Unit/Arrow.cpp
+    Unit/Text.cpp
 )
 
 target_link_libraries(annotation PRIVATE Qt6::Core Qt6::Widgets)
