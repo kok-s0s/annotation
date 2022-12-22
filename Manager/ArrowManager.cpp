@@ -126,30 +126,28 @@ void ArrowManager::mouseMove(const QPoint& wdgPt) {
     GlobalParam::Global_X = wdgPt.x();
     GlobalParam::Global_Y = wdgPt.y();
 
-    if (m_workStatus) {
-      if (m_curArrow->getFirstCreationFlag()) {
-        bool tempFlag = false;
+    if (m_curArrow->getFirstCreationFlag()) {
+      bool tempFlag = false;
 
-        for (Arrow* item : m_curArrowList) {
-          if (item->arrowAreaFlag(wdgPt.x(), wdgPt.y())) {
-            tempFlag = true;
-            break;
-          }
+      for (Arrow* item : m_curArrowList) {
+        if (item->arrowAreaFlag(wdgPt.x(), wdgPt.y())) {
+          tempFlag = true;
+          break;
         }
-
-        if (tempFlag) {
-          m_curArrow->hide();
-          m_parent->setCursor(QCursor(Qt::ClosedHandCursor));
-        } else {
-          m_curArrow->show();
-          m_parent->setCursor(QCursor(Qt::BlankCursor));
-        }
-      } else {
-        m_parent->setCursor(QCursor(Qt::ClosedHandCursor));
       }
 
-      m_curArrow->move(wdgPt.x() - m_curArrow->rect().width() / 2, wdgPt.y() - m_curArrow->rect().height() / 2);
+      if (tempFlag) {
+        m_curArrow->hide();
+        m_parent->setCursor(QCursor(Qt::ClosedHandCursor));
+      } else {
+        m_curArrow->show();
+        m_parent->setCursor(QCursor(Qt::BlankCursor));
+      }
+    } else {
+      m_parent->setCursor(QCursor(Qt::ClosedHandCursor));
     }
+
+    m_curArrow->move(wdgPt.x() - m_curArrow->rect().width() / 2, wdgPt.y() - m_curArrow->rect().height() / 2);
   }
 }
 
