@@ -28,11 +28,11 @@ class ArrowManager : public QObject {
   void onPressArrow();
 
  private:
+  bool m_workStatus = false;
   Arrow* m_curArrow = nullptr;
   QList<Arrow*> m_curArrowList;
   QList<Arrow*> m_undoArrowList;
   int m_arrowMaxCount = 30;
-  bool m_workStatus = false;
   int m_angleIdxF = 0;
   int m_fixedColorIdxF = 0;
   int m_solidIdxF = 1;
