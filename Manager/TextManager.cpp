@@ -52,6 +52,6 @@ void TextManager::mouseMove(const QPoint& wdgPt) {
     GlobalParam::Global_X = wdgPt.x();
     GlobalParam::Global_Y = wdgPt.y();
 
-    m_curText->moveText(wdgPt);
+    m_curText->moveAnnot(wdgPt);
   }
 }

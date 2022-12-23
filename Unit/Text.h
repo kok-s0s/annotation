@@ -5,25 +5,76 @@
 
 #include "../AnnotationDefine.h"
 
+enum AnnotStatus {
+  Fixed,      // ���״̬�����ɲ���
+  Editable,   // �༭״̬�����Ա༭��̽ͷ�����ƶ�������ɾ��
+  Actived,    // �ƶ�״̬�����ɱ༭��̽ͷ�����ƶ�������ɾ��
+  CineFixed,  // ��ԭ��Ӱ���ݣ��رյ�Ӱ��ԭ����ʱͬ����������״̬ͬFixed�����ɿ��ƹ�� by
+              // clg
+};
+
 class Text : public QLineEdit {
   Q_OBJECT
 
  protected:
+  void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
+  // void enterEvent(QEvent* event) Q_DECL_OVERRIDE;
+  void leaveEvent(QEvent* event) Q_DECL_OVERRIDE;
+  void focusInEvent(QFocusEvent* event) Q_DECL_OVERRIDE;
+  void mousePressEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
+  void mouseMoveEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
   void paintEvent(QPaintEvent* event) Q_DECL_OVERRIDE;
+  void mouseReleaseEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
 
  public:
-  enum class Status { Actived, Editable, Fixed };
+  enum class AnnotStatus { Actived, Editable, Fixed };
   Text(QWidget* parent, QLabel* label);
   Text(QWidget* parent, QLabel* label, QString text);
   ~Text();
-  void moveText(const QPoint& pos);
+  bool setStatus(const AnnotStatus& status, const bool& isEmitChanged = true);
+  bool isInArea();
+  void setFontSize(const int& fontSize);
+  void setEditWidth(const int& iWidth);
+  void setCurEditWidth();
+  void moveAnnot(const QPoint& pos);
+  bool isTextEmpty();
+  void setAText(const QString& value, const bool& isSpace);
+  QPoint getPointAtCursor(const QString inText);
+  void setFontName(const QString& value);
+  void setCurPosToTextEnd();
+  bool isOut();
+  void onLeftMousePress();
 
  private:
-  Status m_status;
+  int getTextWidth(const QString& strText);
+  QPoint getCursorAtTextPos(const QString inText, const int& pos);
+
+ private:
+  Q_SLOT void onEditingFinished();
+  Q_SLOT void onTextChanged(const QString inText);
+
+ private:
+  Q_SIGNAL void sigAnnotStatusChanged(Text* annot, const int& preStatus);
+  Q_SIGNAL void sigToEditText(Text* annot);
+  Q_SIGNAL void sigDeleteText();
+  Q_SIGNAL void sigEnterText(Text* annot);
+  Q_SIGNAL void sigLeaveText(Text* annot);
+  Q_SIGNAL void sigMouseRelease(const int& btnType, const QPoint& goablPt);
+
+ private:
+  bool m_isWorking = true;
+  bool m_isUSMainMenuShow = false;
+  bool m_isInUSMainMenu = false;
+  int m_editWidth = 100;  //Ĭ�ϳ���
+  bool m_bCursorDraw = true;
+  QTimer m_cursorDrawTmr;
+  QLabel* m_textLabel;
+  int m_fixedColorIndex = 0;
+  // Status m_status;
+  AnnotStatus m_status = AnnotStatus::Fixed;
   QLabel* m_label;
-  int m_labelEditWidth;
+  int m_labelEditWidth = 100;
   QTimer m_cursorDrawTimer;
-  int m_fixedColorIdx = 0;
 };
 
 #endif  // TEXT_H_
