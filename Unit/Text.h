@@ -23,7 +23,7 @@ class Text : public QLineEdit {
   Text(QWidget* parent, QLabel* label);
   Text(QWidget* parent, QLabel* label, QString text);
   ~Text();
-  bool setStatus(const Status& status, const bool& isEmitChanged = true);
+  void setStatus(const Status& status);
   bool isInArea();
   void setEditWidth(const int& iWidth);
   void setCurEditWidth();
@@ -53,12 +53,12 @@ class Text : public QLineEdit {
   Q_SIGNAL void sigMouseRelease(const int& btnType, const QPoint& goablPt);
 
  private:
-  int m_fixedColorIdx = 0;
-  Status m_status = Status::Fixed;
+  Status m_status = Status::Actived;
   QLabel* m_label;
   int m_labelEditWidth = 100;
   QTimer m_cursorDrawTimer;
   bool m_bCursorDraw = false;
+  int m_fixedColorIdx = 0;
 };
 
 #endif  // TEXT_H_

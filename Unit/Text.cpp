@@ -15,13 +15,13 @@ Text::Text(QWidget* parent, QLabel* label) : QLineEdit(parent), m_cursorDrawTime
   installEventFilter(parent);
 }
 
-Text::Text(QWidget* parent, QLabel* label, QString atext) : QLineEdit(parent), m_cursorDrawTimer(this), m_label(label) {
+Text::Text(QWidget* parent, QLabel* label, QString text) : QLineEdit(parent), m_cursorDrawTimer(this), m_label(label) {
   setMouseTracking(true);
   setModified(false);
   setFrame(false);
   setStyleSheet("border-width:0;border-style:solid;");
   setContextMenuPolicy(Qt::NoContextMenu);
-  setText(atext);
+  setText(text);
   connect(this, &Text::textChanged, this, &Text::onTextChanged);
   connect(&m_cursorDrawTimer, &QTimer::timeout, [=]() {
     m_bCursorDraw = !m_bCursorDraw;
@@ -33,7 +33,7 @@ Text::Text(QWidget* parent, QLabel* label, QString atext) : QLineEdit(parent), m
 
 Text::~Text() {}
 
-bool Text::setStatus(const Status& status, const bool& isEmitChanged) {
+void Text::setStatus(const Status& status) {
   if (status != m_status) {
     switch (status) {
       case Status::Editable:
@@ -46,14 +46,8 @@ bool Text::setStatus(const Status& status, const bool& isEmitChanged) {
         setReadOnly(true);
         break;
     }
-    Status pre_status = m_status;
+
     m_status = status;
-    if (isEmitChanged) {
-      emit sigAnnotStatusChanged(this, int(pre_status));
-    }
-    return true;
-  } else {
-    return false;
   }
 }
 
