@@ -52,7 +52,11 @@ void Arrow::setArrowStatusImage() {
   m_activedImage.load(QString("%1/A/%2_%3.png").arg(ARROW_RES_PATH).arg(m_solidIdx).arg(m_angleIdx));
 }
 
-void Arrow::setStatus(const int &value) { m_status = Status(value); }
+void Arrow::setStatus(const int &value) {
+  if (m_status != Status(value)) {
+    m_status = Status(value);
+  }
+}
 
 QRect Arrow::getArrowArea() {
   QRect rt = rect();

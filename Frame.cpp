@@ -1,7 +1,7 @@
 #include "Frame.h"
 
 void Frame::mouseMoveEvent(QMouseEvent* event) {
-  QPoint wdgPt = mapFromGlobal(event->globalPos());
+  QPoint wdgPt = mapFromGlobal(QCursor::pos());
   m_arrowManager->mouseMove(wdgPt);
   m_textManager->mouseMove(wdgPt);
   QWidget::mouseMoveEvent(event);
