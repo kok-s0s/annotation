@@ -139,17 +139,6 @@ void Text::setAText(const QString& value, const bool& isSpace) {
     }
   }
   setText(newText);
-
-  if (!m_isUSMainMenuShow) {
-    m_isInUSMainMenu = true;
-    setStatus(Status::Actived);
-    QRect rt = this->parentWidget()->rect();
-    int width = rt.width() / 2;
-    int height = rt.height() / 2;
-    QPoint pos = this->parentWidget()->mapToGlobal(QPoint(width, height));
-    moveAnnot(QPoint(width, height));
-    QCursor::setPos(pos);
-  }
 }
 
 void Text::setEditWidth(const int& iWidth) {
@@ -221,10 +210,6 @@ void Text::onLeftMousePress() {
         setStatus(Status::Fixed);
       } else {
         setStatus(Status::Actived);
-        if (m_isInUSMainMenu) {
-          setStatus(Status::Fixed);
-          m_isInUSMainMenu = false;
-        }
       }
     }
   }

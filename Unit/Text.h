@@ -53,8 +53,6 @@ class Text : public QLineEdit {
   Q_SIGNAL void sigMouseRelease(const int& btnType, const QPoint& goablPt);
 
  private:
-  bool m_isUSMainMenuShow = false;
-  bool m_isInUSMainMenu = false;
   int m_fixedColorIdx = 0;
   Status m_status = Status::Fixed;
   QLabel* m_label;
