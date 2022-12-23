@@ -1,7 +1,7 @@
 #include "Text.h"
 
 Text::Text(QWidget* parent, QLabel* label) : QLineEdit(parent), m_cursorDrawTimer(this), m_textLabel(label) {
-  m_status = AnnotStatus::Actived;
+  // m_status = AnnotStatus::Actived;
 
   setMouseTracking(true);
   setModified(false);
@@ -9,17 +9,16 @@ Text::Text(QWidget* parent, QLabel* label) : QLineEdit(parent), m_cursorDrawTime
   setStyleSheet("border-width:0;border-style:solid;");
   setContextMenuPolicy(Qt::NoContextMenu);
   connect(this, &Text::textChanged, this, &Text::onTextChanged);
-  // connect(this, &Text::editingFinished, this, &Text::onEditingFinished); //Enter��
-  // connect(&m_cursorDrawTimer, &QTimer::timeout, [=]() {
-  //   m_bCursorDraw = !m_bCursorDraw;
-  //   update();
-  // });
-  // m_cursorDrawTimer.start(600);  //��������˸
-  installEventFilter(parent);  //����������tab�л�
+  connect(&m_cursorDrawTimer, &QTimer::timeout, [=]() {
+    m_bCursorDraw = !m_bCursorDraw;
+    update();
+  });
+  m_cursorDrawTimer.start(600);
+  installEventFilter(parent);
 }
 
 Text::Text(QWidget* parent, QLabel* label, QString atext) : QLineEdit(parent), m_cursorDrawTimer(this), m_textLabel(label) {
-  m_status = AnnotStatus::Actived;
+  // m_status = AnnotStatus::Actived;
 
   setMouseTracking(true);
   setModified(false);
@@ -28,13 +27,12 @@ Text::Text(QWidget* parent, QLabel* label, QString atext) : QLineEdit(parent), m
   setContextMenuPolicy(Qt::NoContextMenu);
   setText(atext);
   connect(this, &Text::textChanged, this, &Text::onTextChanged);
-  // connect(this, &Text::editingFinished, this, &Text::onEditingFinished); //Enter��
-  // connect(&m_cursorDrawTimer, &QTimer::timeout, [=]() {
-  //   m_bCursorDraw = !m_bCursorDraw;
-  //   update();
-  // });
-  // m_cursorDrawTimer.start(600);  //��������˸
-  installEventFilter(parent);  //����������tab�л�
+  connect(&m_cursorDrawTimer, &QTimer::timeout, [=]() {
+    m_bCursorDraw = !m_bCursorDraw;
+    update();
+  });
+  m_cursorDrawTimer.start(600);
+  installEventFilter(parent);
 }
 
 Text::~Text() {}
@@ -158,21 +156,6 @@ void Text::setAText(const QString& value, const bool& isSpace) {
   }
 }
 
-void Text::setFontSize(const int& fontSize) {
-  // 		if (fontSize <= 0)
-  // 		{
-  // 			return;
-  // 		}
-  // QFont lblSizeFont = font();
-  // lblSizeFont.setPointSize(fontSize);
-
-  // QFont txtfont = USTools::UiStyle::instance()->getTouchFont();
-  // txtfont.setPointSize(fontSize);
-  // txtfont.setStyleStrategy(QFont::PreferAntialias);
-  // setFont(txtfont);
-  // setFont(USTools::UiStyle::instance()->getAnnotTextFont(fontSize));
-}
-
 void Text::setEditWidth(const int& iWidth) {
   m_editWidth = iWidth + 7;
   setFixedWidth(m_editWidth);
@@ -214,10 +197,8 @@ void Text::keyPressEvent(QKeyEvent* event) {
 
 void Text::leaveEvent(QEvent* event) {
   if (isInArea()) {
-    if (m_isWorking) {
-      emit sigLeaveText(this);
-      if (m_status == AnnotStatus::Editable) setStatus(AnnotStatus::Fixed);
-    }
+    emit sigLeaveText(this);
+    if (m_status == AnnotStatus::Editable) setStatus(AnnotStatus::Fixed);
   }
   QLineEdit::leaveEvent(event);
 }
@@ -226,7 +207,7 @@ void Text::focusInEvent(QFocusEvent* event) {
   if (GlobalParam::CurrentAText != nullptr && GlobalParam::CurrentAText != this) {
     QLineEdit::focusInEvent(event);
   } else {
-    if (m_isWorking && m_status != AnnotStatus::Editable && m_status != AnnotStatus::Actived) {
+    if (m_status != AnnotStatus::Editable && m_status != AnnotStatus::Actived) {
       setStatus(AnnotStatus::Editable);
     }
     QLineEdit::focusInEvent(event);
@@ -236,19 +217,17 @@ void Text::focusInEvent(QFocusEvent* event) {
 void Text::onLeftMousePress() {
   if (GlobalParam::CurrentAText != nullptr && GlobalParam::CurrentAText != this) {
   } else {
-    if (m_isWorking) {
-      if (isOut()) {
-        //�����ǰ��곬��ע�͵ķ�Χ������ɱ༭
+    if (isOut()) {
+      //�����ǰ��곬��ע�͵ķ�Χ������ɱ༭
+      setStatus(AnnotStatus::Fixed);
+    } else {
+      if (m_status == AnnotStatus::Actived) {
         setStatus(AnnotStatus::Fixed);
       } else {
-        if (m_status == AnnotStatus::Actived) {
+        setStatus(AnnotStatus::Actived);
+        if (m_isInUSMainMenu) {
           setStatus(AnnotStatus::Fixed);
-        } else {
-          setStatus(AnnotStatus::Actived);
-          if (m_isInUSMainMenu) {
-            setStatus(AnnotStatus::Fixed);
-            m_isInUSMainMenu = false;
-          }
+          m_isInUSMainMenu = false;
         }
       }
     }
@@ -263,26 +242,21 @@ void Text::mousePressEvent(QMouseEvent* event) {
 }
 
 void Text::mouseMoveEvent(QMouseEvent* event) {
-  if (m_isWorking) {
-    QPoint pos = mapToParent(event->pos());
-    GlobalParam::Global_X = pos.x();
-    GlobalParam::Global_Y = pos.y();
+  QPoint pos = mapToParent(event->pos());
+  GlobalParam::Global_X = pos.x();
+  GlobalParam::Global_Y = pos.y();
 
-    if (m_status == AnnotStatus::Editable) {
-      if (!text().isEmpty()) {
-        if (isOut()) {
-          //�����ǰ��곬��ע�͵ķ�Χ������ɱ༭
-          setStatus(AnnotStatus::Fixed);
-        } else {
-          int pos = cursorPositionAt(event->pos());
-          setCursorPosition(pos);
-        }
+  if (m_status == AnnotStatus::Editable) {
+    if (!text().isEmpty()) {
+      if (isOut()) {
+        setStatus(AnnotStatus::Fixed);
+      } else {
+        int pos = cursorPositionAt(event->pos());
+        setCursorPosition(pos);
       }
-    } else if (m_status == AnnotStatus::Actived) {
-      moveAnnot(pos);
     }
-  } else {
-    event->ignore();
+  } else if (m_status == AnnotStatus::Actived) {
+    moveAnnot(pos);
   }
 
   QLineEdit::mouseMoveEvent(event);
@@ -290,18 +264,15 @@ void Text::mouseMoveEvent(QMouseEvent* event) {
 
 void Text::paintEvent(QPaintEvent* event) {
   QPainter painter(this);
-  // QStyleOption opt;
-  // opt.init(this);
-  // style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
-  // //����ѡ�񱳾�,�������Ȼ������ֲſ�����
-  QFontMetrics fontMetric = painter.fontMetrics();  //��ȡ�������
+
+  QFontMetrics fontMetric = painter.fontMetrics();
   int textHeight = fontMetric.height();
-  //���ƹ��
-  if (m_status == AnnotStatus::Actived && hasFocus() && m_bCursorDraw) {
+
+  if (m_status == AnnotStatus::Editable && hasFocus() && m_bCursorDraw) {
     QString disp = displayText();
     int ipos = cursorPosition();
     int cursorX = fontMetric.boundingRect(displayText().left(cursorPosition())).width();
-    //�������λ�ô�������LineEdit���ȵ����
+
     if (cursorX > width()) cursorX = width();
     QPen pen;
     pen.setColor(GlobalParam::CursorColor);
@@ -310,15 +281,8 @@ void Text::paintEvent(QPaintEvent* event) {
     painter.drawLine(QPoint(cursorX, 0), QPoint(cursorX, textHeight));
   }
 
-  //������꣬������
-  // 		QPoint widgetPos = mapFromGlobal(QCursor::pos());
-  // 		painter.drawEllipse(widgetPos, 10, 10);
-
-  //�����ı�
-  //���������ı��ľ���
-
   QRect textRect;
-  //������������Ϊ���������λ�ú�������ʾ�ı������ƶ��Ͷ��ƶ��Ĺ���
+
   int textWidth = 0;
   if (!displayText().isEmpty()) {
     textWidth = fontMetric.boundingRect(displayText().left(cursorPosition())).width();

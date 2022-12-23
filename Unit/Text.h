@@ -5,14 +5,6 @@
 
 #include "../AnnotationDefine.h"
 
-enum AnnotStatus {
-  Fixed,      // ���״̬�����ɲ���
-  Editable,   // �༭״̬�����Ա༭��̽ͷ�����ƶ�������ɾ��
-  Actived,    // �ƶ�״̬�����ɱ༭��̽ͷ�����ƶ�������ɾ��
-  CineFixed,  // ��ԭ��Ӱ���ݣ��رյ�Ӱ��ԭ����ʱͬ����������״̬ͬFixed�����ɿ��ƹ�� by
-              // clg
-};
-
 class Text : public QLineEdit {
   Q_OBJECT
 
@@ -33,7 +25,6 @@ class Text : public QLineEdit {
   ~Text();
   bool setStatus(const AnnotStatus& status, const bool& isEmitChanged = true);
   bool isInArea();
-  void setFontSize(const int& fontSize);
   void setEditWidth(const int& iWidth);
   void setCurEditWidth();
   void moveAnnot(const QPoint& pos);
@@ -62,11 +53,10 @@ class Text : public QLineEdit {
   Q_SIGNAL void sigMouseRelease(const int& btnType, const QPoint& goablPt);
 
  private:
-  bool m_isWorking = true;
   bool m_isUSMainMenuShow = false;
   bool m_isInUSMainMenu = false;
-  int m_editWidth = 100;  //Ĭ�ϳ���
-  bool m_bCursorDraw = true;
+  int m_editWidth = 100;
+  bool m_bCursorDraw = false;
   QTimer m_cursorDrawTmr;
   QLabel* m_textLabel;
   int m_fixedColorIndex = 0;
