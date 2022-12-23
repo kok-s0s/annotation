@@ -19,11 +19,11 @@ class Text : public QLineEdit {
   void mouseReleaseEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
 
  public:
-  enum class AnnotStatus { Actived, Editable, Fixed };
+  enum class Status { Actived, Editable, Fixed };
   Text(QWidget* parent, QLabel* label);
   Text(QWidget* parent, QLabel* label, QString text);
   ~Text();
-  bool setStatus(const AnnotStatus& status, const bool& isEmitChanged = true);
+  bool setStatus(const Status& status, const bool& isEmitChanged = true);
   bool isInArea();
   void setEditWidth(const int& iWidth);
   void setCurEditWidth();
@@ -45,26 +45,22 @@ class Text : public QLineEdit {
   Q_SLOT void onTextChanged(const QString inText);
 
  private:
-  Q_SIGNAL void sigAnnotStatusChanged(Text* annot, const int& preStatus);
-  Q_SIGNAL void sigToEditText(Text* annot);
+  Q_SIGNAL void sigAnnotStatusChanged(Text* text, const int& preStatus);
+  Q_SIGNAL void sigToEditText(Text* text);
   Q_SIGNAL void sigDeleteText();
-  Q_SIGNAL void sigEnterText(Text* annot);
-  Q_SIGNAL void sigLeaveText(Text* annot);
+  Q_SIGNAL void sigEnterText(Text* text);
+  Q_SIGNAL void sigLeaveText(Text* text);
   Q_SIGNAL void sigMouseRelease(const int& btnType, const QPoint& goablPt);
 
  private:
   bool m_isUSMainMenuShow = false;
   bool m_isInUSMainMenu = false;
-  int m_editWidth = 100;
-  bool m_bCursorDraw = false;
-  QTimer m_cursorDrawTmr;
-  QLabel* m_textLabel;
-  int m_fixedColorIndex = 0;
-  // Status m_status;
-  AnnotStatus m_status = AnnotStatus::Fixed;
+  int m_fixedColorIdx = 0;
+  Status m_status = Status::Fixed;
   QLabel* m_label;
   int m_labelEditWidth = 100;
   QTimer m_cursorDrawTimer;
+  bool m_bCursorDraw = false;
 };
 
 #endif  // TEXT_H_

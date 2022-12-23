@@ -1,8 +1,6 @@
 #include "Text.h"
 
-Text::Text(QWidget* parent, QLabel* label) : QLineEdit(parent), m_cursorDrawTimer(this), m_textLabel(label) {
-  // m_status = AnnotStatus::Actived;
-
+Text::Text(QWidget* parent, QLabel* label) : QLineEdit(parent), m_cursorDrawTimer(this), m_label(label) {
   setMouseTracking(true);
   setModified(false);
   setFrame(false);
@@ -17,9 +15,7 @@ Text::Text(QWidget* parent, QLabel* label) : QLineEdit(parent), m_cursorDrawTime
   installEventFilter(parent);
 }
 
-Text::Text(QWidget* parent, QLabel* label, QString atext) : QLineEdit(parent), m_cursorDrawTimer(this), m_textLabel(label) {
-  // m_status = AnnotStatus::Actived;
-
+Text::Text(QWidget* parent, QLabel* label, QString atext) : QLineEdit(parent), m_cursorDrawTimer(this), m_label(label) {
   setMouseTracking(true);
   setModified(false);
   setFrame(false);
@@ -37,20 +33,20 @@ Text::Text(QWidget* parent, QLabel* label, QString atext) : QLineEdit(parent), m
 
 Text::~Text() {}
 
-bool Text::setStatus(const AnnotStatus& status, const bool& isEmitChanged) {
+bool Text::setStatus(const Status& status, const bool& isEmitChanged) {
   if (status != m_status) {
     switch (status) {
-      case AnnotStatus::Editable:
+      case Status::Editable:
         setModified(false);
         setReadOnly(false);
         emit sigToEditText(this);
         break;
-      case AnnotStatus::Fixed:
-      case AnnotStatus::Actived:
+      case Status::Fixed:
+      case Status::Actived:
         setReadOnly(true);
         break;
     }
-    AnnotStatus pre_status = m_status;
+    Status pre_status = m_status;
     m_status = status;
     if (isEmitChanged) {
       emit sigAnnotStatusChanged(this, int(pre_status));
@@ -74,7 +70,7 @@ QPoint Text::getPointAtCursor(const QString inText) {
 }
 
 void Text::moveAnnot(const QPoint& pos) {
-  if (m_status == AnnotStatus::Actived) {
+  if (m_status == Status::Actived) {
     int posX = pos.x();
     int posY = pos.y();
 
@@ -146,7 +142,7 @@ void Text::setAText(const QString& value, const bool& isSpace) {
 
   if (!m_isUSMainMenuShow) {
     m_isInUSMainMenu = true;
-    setStatus(AnnotStatus::Actived);
+    setStatus(Status::Actived);
     QRect rt = this->parentWidget()->rect();
     int width = rt.width() / 2;
     int height = rt.height() / 2;
@@ -157,8 +153,8 @@ void Text::setAText(const QString& value, const bool& isSpace) {
 }
 
 void Text::setEditWidth(const int& iWidth) {
-  m_editWidth = iWidth + 7;
-  setFixedWidth(m_editWidth);
+  m_labelEditWidth = iWidth + 7;
+  setFixedWidth(m_labelEditWidth);
 }
 
 void Text::setCurEditWidth() {
@@ -198,7 +194,7 @@ void Text::keyPressEvent(QKeyEvent* event) {
 void Text::leaveEvent(QEvent* event) {
   if (isInArea()) {
     emit sigLeaveText(this);
-    if (m_status == AnnotStatus::Editable) setStatus(AnnotStatus::Fixed);
+    if (m_status == Status::Editable) setStatus(Status::Fixed);
   }
   QLineEdit::leaveEvent(event);
 }
@@ -207,8 +203,8 @@ void Text::focusInEvent(QFocusEvent* event) {
   if (GlobalParam::CurrentAText != nullptr && GlobalParam::CurrentAText != this) {
     QLineEdit::focusInEvent(event);
   } else {
-    if (m_status != AnnotStatus::Editable && m_status != AnnotStatus::Actived) {
-      setStatus(AnnotStatus::Editable);
+    if (m_status != Status::Editable && m_status != Status::Actived) {
+      setStatus(Status::Editable);
     }
     QLineEdit::focusInEvent(event);
   }
@@ -219,14 +215,14 @@ void Text::onLeftMousePress() {
   } else {
     if (isOut()) {
       //�����ǰ��곬��ע�͵ķ�Χ������ɱ༭
-      setStatus(AnnotStatus::Fixed);
+      setStatus(Status::Fixed);
     } else {
-      if (m_status == AnnotStatus::Actived) {
-        setStatus(AnnotStatus::Fixed);
+      if (m_status == Status::Actived) {
+        setStatus(Status::Fixed);
       } else {
-        setStatus(AnnotStatus::Actived);
+        setStatus(Status::Actived);
         if (m_isInUSMainMenu) {
-          setStatus(AnnotStatus::Fixed);
+          setStatus(Status::Fixed);
           m_isInUSMainMenu = false;
         }
       }
@@ -246,16 +242,16 @@ void Text::mouseMoveEvent(QMouseEvent* event) {
   GlobalParam::Global_X = pos.x();
   GlobalParam::Global_Y = pos.y();
 
-  if (m_status == AnnotStatus::Editable) {
+  if (m_status == Status::Editable) {
     if (!text().isEmpty()) {
       if (isOut()) {
-        setStatus(AnnotStatus::Fixed);
+        setStatus(Status::Fixed);
       } else {
         int pos = cursorPositionAt(event->pos());
         setCursorPosition(pos);
       }
     }
-  } else if (m_status == AnnotStatus::Actived) {
+  } else if (m_status == Status::Actived) {
     moveAnnot(pos);
   }
 
@@ -268,7 +264,7 @@ void Text::paintEvent(QPaintEvent* event) {
   QFontMetrics fontMetric = painter.fontMetrics();
   int textHeight = fontMetric.height();
 
-  if (m_status == AnnotStatus::Editable && hasFocus() && m_bCursorDraw) {
+  if (m_status == Status::Editable && hasFocus() && m_bCursorDraw) {
     QString disp = displayText();
     int ipos = cursorPosition();
     int cursorX = fontMetric.boundingRect(displayText().left(cursorPosition())).width();
@@ -297,8 +293,8 @@ void Text::paintEvent(QPaintEvent* event) {
   //����Ҫ���Ƶ����ݣ������ı�����ɫ
   QString drawText;
   if (!displayText().isEmpty()) {
-    if (m_status == AnnotStatus::Fixed) {
-      painter.setPen(QPen(GlobalParam::FixedColorA[m_fixedColorIndex]));
+    if (m_status == Status::Fixed) {
+      painter.setPen(QPen(GlobalParam::FixedColorA[m_fixedColorIdx]));
     } else {
       painter.setPen(QPen(GlobalParam::ActivedColor));
     }
@@ -318,9 +314,9 @@ bool Text::isOut() {
   if (isInArea()) {
     QPoint pos = mapFromGlobal(QCursor::pos());
     QRect rt = rect();
-    m_textLabel->setText(this->text());
-    m_textLabel->adjustSize();
-    rt.setWidth(m_textLabel->width() + TEXTEASYIN_PIX);
+    m_label->setText(this->text());
+    m_label->adjustSize();
+    rt.setWidth(m_label->width() + TEXTEASYIN_PIX);
     ret = !rt.contains(pos);
   }
   return ret;
@@ -356,7 +352,7 @@ QPoint Text::getCursorAtTextPos(const QString inText, const int& pos) {
 
 void Text::onEditingFinished() {
   if (isInArea()) {
-    if (m_status == AnnotStatus::Editable) setStatus(AnnotStatus::Fixed);
+    if (m_status == Status::Editable) setStatus(Status::Fixed);
   }
 }
 
@@ -365,7 +361,7 @@ void Text::onTextChanged(const QString inText) {
 
   bool needCut = false;
   QString tempText = inText;
-  while (getTextWidth(tempText) > m_editWidth - TEXTEASYIN_PIX) {
+  while (getTextWidth(tempText) > m_labelEditWidth - TEXTEASYIN_PIX) {
     needCut = true;
     tempText = tempText.left(tempText.length() - 1);
   }
