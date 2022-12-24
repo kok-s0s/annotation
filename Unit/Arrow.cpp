@@ -25,10 +25,10 @@ void Arrow::mousePressEvent(QMouseEvent *event) {
 Arrow::Arrow(int angleIdx, int fixedColorIdx, int solidIdx, int sizeIdx, QWidget *parent) : QWidget(parent) {
   m_status = Status::Actived;
 
-  m_angleIdx = angleIdx;
-  m_fixedColorIdx = fixedColorIdx;
-  m_solidIdx = solidIdx;
-  m_sizeIdx = sizeIdx;
+  m_angleIdx = angleIdx % 8;
+  m_fixedColorIdx = fixedColorIdx % 6;
+  m_solidIdx = solidIdx % 2;
+  m_sizeIdx = sizeIdx % GlobalParam::ArrowSizeA.size();
 
   int iSize = GlobalParam::ArrowSizeA[m_sizeIdx];
   setFixedSize(iSize, iSize);

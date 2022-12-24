@@ -93,21 +93,21 @@ void ArrowManager::changeCurArrow(Arrow* arrow) {
 
 void ArrowManager::setArrowAngle(const int& value) {
   if (m_workStatus) {
-    m_angleIdxF = value % 8;
+    m_angleIdxF = value;
     m_curArrow->setAngleIdx(m_angleIdxF);
   }
 }
 
 void ArrowManager::setArrowFixedColor(const int& value) {
   if (m_workStatus) {
-    m_fixedColorIdxF = value % 6;
+    m_fixedColorIdxF = value;
     m_curArrow->setFixedColorIdx(m_fixedColorIdxF);
   }
 }
 
 void ArrowManager::setArrowSolid(const int& value) {
   if (m_workStatus) {
-    m_solidIdxF = value % 2;
+    m_solidIdxF = value;
     m_curArrow->setSolidIdx(m_solidIdxF);
   }
 }
