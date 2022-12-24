@@ -35,7 +35,7 @@ class ArrowManager : public QObject {
   int m_arrowMaxCount = 30;
   int m_angleIdxF = 0;
   int m_fixedColorIdxF = 0;
-  int m_solidIdxF = 1;
+  int m_solidIdxF = 0;
   int m_sizeIdxF = 0;
 };
 

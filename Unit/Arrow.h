@@ -40,7 +40,7 @@ class Arrow : public QWidget {
   bool m_firstCreationFlag = true;
   int m_angleIdx = 0;
   int m_fixedColorIdx = 0;
-  int m_solidIdx = 1;
+  int m_solidIdx = 0;
   int m_sizeIdx = 0;
   QPixmap m_fixedImage;
   QPixmap m_activedImage;
