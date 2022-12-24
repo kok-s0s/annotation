@@ -80,16 +80,14 @@ void ArrowManager::changeWorkStatus() {
 }
 
 void ArrowManager::changeCurArrow(Arrow* arrow) {
-  if (!m_workStatus) {
-    if (m_curArrow == arrow) {
-      return;
-    }
+  if (m_curArrow == arrow) {
+    return;
+  }
 
-    delete m_curArrow;
-    m_curArrow = arrow;
-    if (m_workStatus) {
-      m_curArrow->setStatus(0);
-    }
+  delete m_curArrow;
+  m_curArrow = arrow;
+  if (m_workStatus) {
+    m_curArrow->setStatus(0);
   }
 }
 
