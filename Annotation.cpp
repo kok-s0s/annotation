@@ -26,11 +26,11 @@ Annotation::Annotation(QWidget *parent) : QMainWindow(parent), ui(new Ui::Annota
 
 Annotation::~Annotation() {}
 
-void Annotation::on_btnArrow_clicked() { m_frame->m_arrowManager->changeWorkStatus(); }
+void Annotation::on_btnArrow_clicked() { m_frame->arrowSwitchWorkStatus(); }
 
 void Annotation::on_btnArrowAngle_clicked() {
   m_angleIdx++;
-  m_frame->m_arrowManager->setArrowAngle(m_angleIdx);
+  m_frame->apiSetArrowAngle(m_angleIdx);
   if (m_angleIdx > INT_MAX) {
     m_angleIdx = 0;
   }
@@ -38,7 +38,7 @@ void Annotation::on_btnArrowAngle_clicked() {
 
 void Annotation::on_btnArrowSolid_clicked() {
   m_solidIdx++;
-  m_frame->m_arrowManager->setArrowSolid(m_solidIdx);
+  m_frame->apiSetArrowSolid(m_solidIdx);
   if (m_solidIdx > INT_MAX) {
     m_solidIdx = 0;
   }
@@ -46,7 +46,7 @@ void Annotation::on_btnArrowSolid_clicked() {
 
 void Annotation::on_btnArrowColor_clicked() {
   m_fixedColorIdx++;
-  m_frame->m_arrowManager->setArrowFixedColor(m_fixedColorIdx);
+  m_frame->apiSetArrowFixedColor(m_fixedColorIdx);
   if (m_fixedColorIdx > INT_MAX) {
     m_fixedColorIdx = 0;
   }
@@ -54,14 +54,14 @@ void Annotation::on_btnArrowColor_clicked() {
 
 void Annotation::on_btnArrowSize_clicked() {
   m_sizeIdx++;
-  m_frame->m_arrowManager->setArrowSize(m_sizeIdx);
+  m_frame->apiSetArrowSize(m_sizeIdx);
   if (m_sizeIdx > INT_MAX) {
     m_sizeIdx = 0;
   }
 }
 
-void Annotation::on_btnArrowDelete_clicked() { m_frame->m_arrowManager->deleteArrow(); }
+void Annotation::on_btnArrowDelete_clicked() { m_frame->apiDeleteArrow(); }
 
-void Annotation::on_btnArrowUndo_clicked() { m_frame->m_arrowManager->undoArrow(); }
+void Annotation::on_btnArrowUndo_clicked() { m_frame->apiUndoArrow(); }
 
-void Annotation::on_btnText_clicked() { m_frame->m_textManager->changeWorkStatus(); }
+void Annotation::on_btnText_clicked() { m_frame->textSwitchWorkStatus(); }

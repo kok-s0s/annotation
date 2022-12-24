@@ -19,3 +19,19 @@ Frame::Frame(QWidget* parent) : QFrame(parent) {
 }
 
 Frame::~Frame() {}
+
+void Frame::arrowSwitchWorkStatus() { m_arrowManager->changeWorkStatus(); }
+
+void Frame::apiSetArrowAngle(const int& value) { m_arrowManager->setArrowAngle(value); }
+
+void Frame::apiSetArrowSolid(const int& value) { m_arrowManager->setArrowSolid(value); }
+
+void Frame::apiSetArrowFixedColor(const int& value) { m_arrowManager->setArrowFixedColor(value); }
+
+void Frame::apiSetArrowSize(const int& value) { m_arrowManager->setArrowSize(value); }
+
+void Frame::apiDeleteArrow() { m_arrowManager->deleteArrow(); }
+
+void Frame::apiUndoArrow() { m_arrowManager->undoArrow(); }
+
+void Frame::textSwitchWorkStatus() { m_arrowManager->changeWorkStatus(); }

@@ -13,8 +13,16 @@ class Frame : public QFrame {
  public:
   Frame(QWidget *parent = Q_NULLPTR);
   ~Frame();
+  void arrowSwitchWorkStatus();
+  void apiSetArrowAngle(const int &value);
+  void apiSetArrowSolid(const int &value);
+  void apiSetArrowFixedColor(const int &value);
+  void apiSetArrowSize(const int &value);
+  void apiDeleteArrow();
+  void apiUndoArrow();
+  void textSwitchWorkStatus();
 
- public:
+ private:
   ArrowManager *m_arrowManager;
   TextManager *m_textManager;
 };
